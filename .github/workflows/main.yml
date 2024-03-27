@@ -1,19 +1,25 @@
 name: Test workflow
 run-name: Test workflow ${{ github.run_number }}
 
-defaults:
-  run:
-    shell: bash
-
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths-ignore: [.github/**]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '15 6 * * 0'
 
 permissions: 
   contents: read
 
 jobs:
-  test:
+  Test:
     name: Test ${{ github.run_number }}
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        echo hello
+    - run: |
+          echo hello
+    - uses: actions/checkout@v3.3.0
+    - run: tree
