@@ -1,0 +1,18 @@
+name: test workflow
+run-name: Test workflow ${{ github.run_number }}
+
+defaults:
+  run:
+    shell: bash
+
+on: [workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    stpes:
+      - run: |
+        echo "hello"
