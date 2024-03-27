@@ -1,18 +1,19 @@
-name: test workflow
+name: Test workflow
 run-name: Test workflow ${{ github.run_number }}
 
 defaults:
   run:
-    shell: bash
+    shell: pwsh
 
 on: [workflow_dispatch]
 
-permissions:
+permissions: 
   contents: read
 
 jobs:
   test:
+    name: Test ${{ github.run_number }}
     runs-on: ubuntu-latest
-    stpes:
+    steps:
       - run: |
         echo "hello"
