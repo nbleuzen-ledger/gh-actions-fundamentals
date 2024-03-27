@@ -27,3 +27,7 @@ jobs:
       run: echo '${{ toJSON(runner) }}'
     - name: Dump GitHub context
       run: echo '${{ toJSON(github) }}'
+    - name: Dump Env context
+      run: echo '${{ toJSON(env) }}'
+    - name: Dump Matrix context
+      run: echo '${{ toJSON(matrix) }}'
