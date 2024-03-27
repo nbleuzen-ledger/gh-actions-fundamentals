@@ -23,3 +23,7 @@ jobs:
           echo hello
     - uses: actions/checkout@v3.3.0
     - run: tree
+    - name: Dump runner context
+      run: echo '${{ toJSON(runner) }}'
+    - name: Dump GitHub context
+      run: echo '${{ toJSON(github) }}'
