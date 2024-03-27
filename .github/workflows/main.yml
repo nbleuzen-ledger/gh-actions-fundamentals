@@ -3,7 +3,7 @@ run-name: Test workflow ${{ github.run_number }}
 
 defaults:
   run:
-    shell: pwsh
+    shell: bash
 
 on: [workflow_dispatch]
 
@@ -16,4 +16,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo "hello"
+        echo hello
