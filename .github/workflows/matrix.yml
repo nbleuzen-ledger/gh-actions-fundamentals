@@ -8,64 +8,32 @@ on:
     paths-ignore: [.github/**]
   pull_request:
     branches: [ main ]
-  schedule:
-    - cron: '15 6 * * 0'
+  # schedule:
+  #   - cron: '15 6 * * 0'
 
 permissions: 
   contents: read
 
 jobs:
   Build:
+    needs: call-job-dump-context
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
-      - run: |
-          echo "🎉 The job was triggered by event: ${{ github.event_name }}"
-          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
-      - name: List files in the repository
-        run: |
-          echo "The repository ${{ github.repository }} contains the following files:"
-          tree
-      - name: Dump runner context
-        run: echo '${{ toJSON(runner) }}'
-      - name: Dump GitHub context
-        run: echo '${{ toJSON(github) }}'
-      - name: Dump Env context
-        run: echo '${{ toJSON(env) }}'
-      - name: Dump Matrix context
-        run: echo '${{ toJSON(matrix) }}'
-      - name: It is NOT a matrix
-        run: echo 'It is not'
-        if: matrix == null
-      - name: It is a matrix
-        run: echo 'It is!'
-        if: matrix != null
+      - name: valid
+        run: echo ok
+
+  call-job-dump-context:
+    uses: ./.github/workflows/dump-context.yml
 
   Build-Matrix:
+    needs: call-job-dump-context-matrix
     runs-on: ubuntu-latest
+    steps:
+      - name: valid
+        run: echo ok
+
+  call-job-dump-context-matrix:
+    uses: ./.github/workflows/dump-context.yml
     strategy:
       matrix:
         testing: ["0", "1"]
-    steps:
-      - uses: actions/checkout@v3.3.0
-      - run: |
-          echo "🎉 The job was triggered by event: ${{ github.event_name }}"
-          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
-      - name: List files in the repository
-        run: |
-          echo "The repository ${{ github.repository }} contains the following files:"
-          tree
-      - name: Dump runner context
-        run: echo '${{ toJSON(runner) }}'
-      - name: Dump GitHub context
-        run: echo '${{ toJSON(github) }}'
-      - name: Dump Env context
-        run: echo '${{ toJSON(env) }}'
-      - name: Dump Matrix context
-        run: echo '${{ toJSON(matrix) }}'
-      - name: It is NOT a matrix
-        run: echo 'It is not'
-        if: matrix == null
-      - name: It is a matrix
-        run: echo 'It is!'
-        if: matrix != null
