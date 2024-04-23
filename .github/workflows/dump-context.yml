@@ -1,0 +1,42 @@
+name: job dump context
+run-name: job dump context ${{ github.run_number }}
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths-ignore: [.github/**]
+  pull_request:
+    branches: [ main ]
+  # schedule:
+  #   - cron: '15 6 * * 0'
+
+permissions: 
+  contents: read
+
+jobs:
+  Dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - run: |
+          echo "🎉 The job was triggered by event: ${{ github.event_name }}"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
+      - name: List files in the repository
+        run: |
+          echo "The repository ${{ github.repository }} contains the following files:"
+          tree
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump GitHub context
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump Env context
+        run: echo '${{ toJSON(env) }}'
+      - name: Dump Matrix context
+        run: echo '${{ toJSON(matrix) }}'
+      - name: It is NOT a matrix
+        run: echo 'It is not'
+        if: matrix == null
+      - name: It is a matrix
+        run: echo 'It is!'
+        if: matrix != null
