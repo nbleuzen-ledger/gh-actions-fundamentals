@@ -2,14 +2,7 @@ name: job dump context
 run-name: job dump context ${{ github.run_number }}
 
 on:
-  workflow_dispatch: {}
-  push:
-    branches: [ main ]
-    paths-ignore: [.github/**]
-  pull_request:
-    branches: [ main ]
-  # schedule:
-  #   - cron: '15 6 * * 0'
+  workflow_call: {}
 
 permissions: 
   contents: read
