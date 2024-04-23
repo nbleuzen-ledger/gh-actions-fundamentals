@@ -34,9 +34,12 @@ jobs:
         run: echo '${{ toJSON(env) }}'
       - name: Dump Matrix context
         run: echo '${{ toJSON(matrix) }}'
-      - name: Is it a matrix ?
+      - name: It is NOT a matrix
         run: echo 'It is not'
         if: matrix == null
+      - name: It is a matrix
+        run: echo 'It is!'
+        if: matrix != null
 
   Build-Matrix:
     runs-on: ubuntu-latest
