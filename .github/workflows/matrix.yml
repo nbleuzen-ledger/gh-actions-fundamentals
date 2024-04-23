@@ -1,5 +1,5 @@
 name: Matrix test workflow
-run-name: Test workflow ${{ github.run_number }}
+run-name: Matrix test workflow ${{ github.run_number }}
 
 on:
   workflow_dispatch: {}
